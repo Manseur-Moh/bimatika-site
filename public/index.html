@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BIMATIKA — Shaping the built environment</title>
+<meta name="description" content="BIMATIKA — architectes et ingénieurs associés, spécialisés en développement technique et management BIM. De l'esquisse à la livraison."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#f4f1ea; --fg:#14171c; --card:#fffdf8; --bg2:#eae5da; --line:#d7d2c4; --muted:#6f6b5e; --stroke:#14171c;
+    --inv-bg:#14171c; --inv-fg:#f4f1ea; --inv-line:#2a313b; --inv-muted:#9aa2ad; --inv-card:#1b212b;
+    --disp:'Space Grotesk',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif;
+  }
+  [data-theme=dark]{
+    --bg:#0d1014; --fg:#e9e7e0; --card:#171c24; --bg2:#11151b; --line:#272d36; --muted:#8b909a; --stroke:#e9e7e0;
+    --inv-bg:#05070a; --inv-fg:#e9e7e0; --inv-line:#1b212b; --inv-muted:#7e8794; --inv-card:#0e131a;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--fg);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  h1,h2,h3,h4,.disp{font-family:var(--disp);letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 26px}
+  .eyebrow{font-family:var(--disp);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+  .grid-bg{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:34px 34px;opacity:.45}
+
+  .wm{font-family:var(--disp);font-weight:700;font-size:22px;letter-spacing:.02em;display:inline-flex;align-items:center;gap:1px;white-space:nowrap;color:var(--fg)}
+  .wm .chev{font-weight:700;margin-right:5px;transform:translateY(-1px)}
+  .wm .out{-webkit-text-stroke:1.3px var(--stroke);color:transparent}
+
+  header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;height:66px;gap:22px}
+  .nav-links{display:flex;gap:24px;margin-left:auto}
+  .nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .15s}
+  .nav-links a:hover{color:var(--fg)}
+  .nav-tools{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .tgl{font-family:var(--disp);font-weight:600;font-size:13px;min-width:38px;height:36px;padding:0 11px;border:1.4px solid var(--line);border-radius:2px;background:transparent;color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:border-color .15s}
+  .tgl:hover{border-color:var(--fg)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:600;font-size:14px;padding:11px 20px;border-radius:2px;border:1.4px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer;transition:all .15s}
+  .btn:hover{background:transparent;color:var(--fg)}
+  .btn.ghost{background:transparent;color:var(--fg)}
+  .btn.ghost:hover{background:var(--fg);color:var(--bg)}
+  .nav .btn{padding:9px 16px}
+
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .grid-bg{position:absolute;inset:0}
+  .hero-in{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding:84px 0 76px}
+  .hero h1{font-size:clamp(40px,6vw,76px);font-weight:700;line-height:.98;text-transform:uppercase}
+  .hero h1 .thin{display:block;-webkit-text-stroke:1.5px var(--stroke);color:transparent}
+  .hero .tag{margin-top:18px;font-size:18px;color:var(--fg);opacity:.85;max-width:32ch}
+  .hero .sub{margin-top:14px;color:var(--muted);max-width:46ch}
+  .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+  .hero-art{position:relative;aspect-ratio:1/.92}
+  .hero-art svg{width:100%;height:100%;display:block;stroke:var(--fg)}
+  .stamp{position:absolute;right:0;bottom:-10px;font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--bg2)}
+  .stat{padding:26px 20px;border-right:1px solid var(--line);text-align:center}
+  .stat:last-child{border-right:none}
+  .stat .n{font-family:var(--disp);font-size:34px;font-weight:700;line-height:1}
+  .stat .l{font-size:12.5px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+
+  section{padding:84px 0}
+  .sec-head{max-width:720px;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(28px,4vw,44px);font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:10px}
+  .sec-head p{margin-top:14px;color:var(--fg);opacity:.8;font-size:17px}
+  .lead{font-size:18px;color:var(--fg);opacity:.85}
+
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:start}
+  .quote{font-family:var(--disp);font-size:clamp(22px,3vw,30px);font-weight:600;line-height:1.25;border-left:3px solid var(--fg);padding-left:20px}
+  .projects{margin-top:26px;display:grid;gap:10px}
+  .proj{display:flex;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:3px}
+  .proj .k{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;min-width:104px}
+  .proj .v{font-size:14.5px}
+
+  .vm{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .vm-card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:34px;position:relative;overflow:hidden}
+  .vm-card .no{position:absolute;right:18px;top:6px;font-family:var(--disp);font-weight:700;font-size:90px;color:var(--bg2);line-height:1;z-index:0}
+  .vm-card h3{position:relative;font-size:24px;text-transform:uppercase;margin-bottom:12px}
+  .vm-card p{position:relative;color:var(--fg);opacity:.82;font-size:15.5px}
+
+  .sol{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .sol-card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px;display:flex;flex-direction:column}
+  .sol-card .ico{width:46px;height:46px;border:1.5px solid var(--fg);border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .sol-card .ico svg{width:24px;height:24px;stroke:var(--fg);fill:none;stroke-width:1.6}
+  .sol-card h3{font-size:18px;text-transform:uppercase;line-height:1.15;min-height:42px}
+  .sol-card ul{list-style:none;margin-top:14px;display:grid;gap:9px}
+  .sol-card li{position:relative;padding-left:18px;font-size:13.5px;color:var(--fg);opacity:.82}
+  .sol-card li::before{content:"›";position:absolute;left:0;color:var(--fg);font-weight:700}
+
+  .env{background:var(--inv-bg);color:var(--inv-fg)}
+  .env .sec-head h2{color:var(--inv-fg)} .env .sec-head p{color:var(--inv-muted);opacity:1} .env .eyebrow{color:var(--inv-muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+  .chip{font-family:var(--disp);font-size:13px;font-weight:500;padding:9px 16px;border:1px solid var(--inv-line);border-radius:40px;color:var(--inv-fg)}
+  .env-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--inv-line);border:1px solid var(--inv-line);border-radius:4px;overflow:hidden}
+  .env-cat{background:var(--inv-bg);padding:22px 20px}
+  .env-cat h4{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--inv-fg)}
+  .env-cat p{font-size:13px;color:var(--inv-muted);margin-top:5px}
+
+  .plat{background:var(--bg2)}
+  .plat-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:46px;align-items:center}
+  .plat .badge{display:inline-block;font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--fg);padding:5px 12px;border-radius:40px;margin-bottom:16px}
+  .plat h2{font-size:clamp(30px,4.4vw,50px);text-transform:uppercase;line-height:1;font-weight:700}
+  .plat h2 .o{-webkit-text-stroke:1.5px var(--stroke);color:transparent}
+  .plat .feats{margin:22px 0 26px;display:grid;gap:12px}
+  .plat .feat{display:flex;gap:12px;align-items:flex-start}
+  .plat .feat .d{width:26px;height:26px;flex-shrink:0;border:1.4px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:var(--disp);font-weight:700}
+  .plat .feat b{font-family:var(--disp)}
+  .mock{background:#0d1526;border:1px solid #1f2c44;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.22)}
+  .mock-bar{height:34px;background:#111c2e;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid #1f2c44}
+  .mock-bar i{width:9px;height:9px;border-radius:50%;background:#33415c;display:inline-block}
+  .mock-bar span{margin-left:10px;font-size:11px;color:#7e8aa3;font-family:var(--disp)}
+  .mock-body{display:grid;grid-template-columns:54px 1fr 150px;height:230px}
+  .mk-rail{background:#0b1424;border-right:1px solid #182338}
+  .mk-rail i{display:block;height:30px;margin:8px 7px;border-radius:4px;background:#15203a}
+  .mk-plan{position:relative;background:#060e1f;overflow:hidden}
+  .mk-plan svg{position:absolute;inset:0;width:100%;height:100%}
+  .mk-side{background:#0b1424;border-left:1px solid #182338;padding:10px}
+  .mk-side i{display:block;height:13px;margin-bottom:7px;border-radius:3px;background:#15203a}
+  .mk-side i.s{width:60%}
+
+  .team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .mem{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:26px 22px;text-align:center}
+  .mono{width:74px;height:74px;border-radius:50%;margin:0 auto 16px;background:var(--fg);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:24px;letter-spacing:.03em}
+  .mem .photo-wrap{width:140px;height:140px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--line);flex-shrink:0}
+  .mem .photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:grayscale(20%);transition:transform .35s ease,filter .35s ease}
+  .mem:hover .photo{transform:scale(1.12);filter:grayscale(0%)}
+  .mem h4{font-size:16px;text-transform:uppercase;letter-spacing:.02em}
+  .mem .role{font-family:var(--disp);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:4px 0 10px}
+  .mem .yrs{display:inline-block;font-family:var(--disp);font-weight:600;font-size:12px;border:1px solid var(--line);border-radius:40px;padding:3px 11px;margin-bottom:10px}
+  .mem p{font-size:12.5px;color:var(--fg);opacity:.8;line-height:1.55}
+
+  .contact{background:var(--inv-bg);color:var(--inv-fg);text-align:center}
+  .contact .eyebrow{color:var(--inv-muted)}
+  .contact h2{font-size:clamp(30px,5vw,58px);text-transform:uppercase;font-weight:700;line-height:1}
+  .contact h2 .o{-webkit-text-stroke:1.6px var(--inv-fg);color:transparent}
+  .contact p{color:var(--inv-muted);margin:16px auto 28px;max-width:48ch}
+  .contact-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn.lite{border-color:var(--inv-fg);background:var(--inv-fg);color:var(--inv-bg)}
+  .btn.lite:hover{background:transparent;color:var(--inv-fg)}
+  .btn.outline-lite{border-color:var(--inv-fg);background:transparent;color:var(--inv-fg)}
+  .btn.outline-lite:hover{background:var(--inv-fg);color:var(--inv-bg)}
+
+  footer{background:var(--inv-bg);color:var(--inv-muted);border-top:1px solid var(--inv-line);padding:28px 0}
+  .foot-in{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+  .foot-in a{color:var(--inv-fg)}
+  .foot-in .wm{color:var(--inv-fg)} .foot-in .wm .out{-webkit-text-stroke-color:var(--inv-fg)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-in,.about-grid,.plat-grid{grid-template-columns:1fr;gap:34px}
+    .hero-art{max-width:460px}
+    .vm,.sol,.env-cats{grid-template-columns:1fr}
+    .team{grid-template-columns:1fr 1fr}
+    .stats{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+  }
+  @media(max-width:520px){ .team{grid-template-columns:1fr} .stat .n{font-size:27px} .nav .btn{display:none} }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="wm"><span class="chev">›</span>BIM<span class="out">ATIKA</span></a>
+    <nav class="nav-links">
+      <a href="#about" data-en="About">À propos</a>
+      <a href="#services" data-en="Services">Services</a>
+      <a href="#platform" data-en="Platform">Plateforme</a>
+      <a href="#team" data-en="Team">Équipe</a>
+      <a href="#contact" data-en="Contact">Contact</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="tgl" id="langBtn" title="Language">EN</button>
+      <button class="tgl" id="themeBtn" title="Thème" aria-label="Basculer le thème">☾</button>
+      <a href="https://bimatika-bimplan.pages.dev" target="_blank" rel="noopener" class="btn" data-en="BimPlan platform">Plateforme BimPlan</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="grid-bg"></div>
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow" data-en="Architecture · Engineering · BIM">Architecture · Ingénierie · BIM</span>
+      <h1>Shaping<br/>the <span class="thin">built</span><br/>environment</h1>
+      <p class="tag" data-en="Associate architects and engineers serving your projects — from concept to delivery.">Des architectes et ingénieurs associés au service de vos projets — de l'esquisse à la livraison.</p>
+      <p class="sub" data-en="Far more than modeling: a mastery of building techniques combined with the power of BIM, for reliable models that are ready to build from.">Bien plus que de la modélisation : une maîtrise technique du bâtiment alliée à la puissance du BIM, pour des maquettes fiables et directement exploitables.</p>
+      <div class="hero-cta">
+        <a href="#services" class="btn" data-en="Explore our services">Découvrir nos services</a>
+        <a href="#platform" class="btn ghost" data-en="Our BimPlan platform">Notre plateforme BimPlan</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 520 470" fill="none" stroke="#14171c" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true">
+        <g opacity=".25" stroke-width="0.7">
+          <path d="M30 40v400M110 20v420M250 60v380M390 30v410M490 50v390"/>
+          <path d="M20 110h480M20 200h480M20 300h480M20 400h480"/>
+        </g>
+        <path d="M150 430V150l120-70 120 70v280"/>
+        <path d="M150 150l120 70 120-70M270 220v210"/>
+        <path d="M150 200l120 70 120-70M150 250l120 70 120-70M150 300l120 70 120-70M150 360l120 70 120-70"/>
+        <path d="M60 430V300l90-45v175M60 300l90-45M150 255l40 22v153"/>
+        <g opacity=".55" stroke-width=".9">
+          <path d="M180 250v160M210 233v177M240 250v160"/>
+          <path d="M300 250v160M330 233v177M360 250v160"/>
+        </g>
+        <path d="M30 430h470" stroke-width="1.4"/>
+      </svg>
+      <span class="stamp">BIM · LOD 200 → 500</span>
+    </div>
+  </div>
+  <div class="wrap"><div class="stats">
+    <div class="stat"><div class="n">14<span style="font-size:18px">ans</span></div><div class="l" data-en="of experience">d'expérience</div></div>
+    <div class="stat"><div class="n">520</div><div class="l" data-en="beds · Staoueli Hospital">lits · Hôpital Staoueli</div></div>
+    <div class="stat"><div class="n" style="font-size:24px;padding:5px 0">ISO 19650</div><div class="l" data-en="CDE & standards">CDE & standards</div></div>
+    <div class="stat"><div class="n">4D</div><div class="l" data-en="phasing & QTO">phasage & QTO</div></div>
+  </div></div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow" data-en="About us">À propos de nous</span>
+      <h2 data-en="Technical associates, not just a modeler">Des associés techniques, pas un simple modeleur</h2>
+      <p data-en="We master the building's full life cycle — expertise gained on major projects in Algeria and abroad.">Nous maîtrisons le cycle de vie complet du bâtiment, une compétence acquise sur des projets majeurs en Algérie et à l'international.</p>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="quote" data-en="“ Far more than 3D modeling — genuine constructive intelligence built into every model. ”">« Bien plus que de la modélisation 3D — une véritable intelligence constructive injectée dans chaque maquette. »</p>
+        <p style="margin-top:22px;color:var(--fg);opacity:.82" data-en="As architects, we ensure every model respects best practice, current standards and DTUs. This dual competence — building technique and digital expertise — lets us deliver reliable plans and models, directly usable for construction, anticipating real site constraints.">En tant qu'architectes, nous garantissons que chaque modèle respecte les règles de l'art, les normes en vigueur et les DTU. Cette double compétence — technique du bâtiment et expertise digitale — nous permet de livrer des plans et des maquettes fiables, directement exploitables pour l'exécution, en anticipant les contraintes réelles du chantier.</p>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow" data-en="Reference projects">Projets de référence</span>
+        <div class="projects">
+          <div class="proj"><span class="k" data-en="Health">Santé</span><span class="v" data-en="Staoueli Military Hospital — 520 beds">Hôpital Militaire de Staoueli — 520 lits</span></div>
+          <div class="proj"><span class="k" data-en="Administration">Administration</span><span class="v" data-en="New headquarters of the Ministry of Housing (MHUV)">Nouveau siège du Ministère de l'Habitat (MHUV)</span></div>
+          <div class="proj"><span class="k" data-en="Tourism">Tourisme</span><span class="v" data-en="Staoueli Thalassotherapy complex">Complexe de Thalassothérapie de Staoueli</span></div>
+          <div class="proj"><span class="k" data-en="Retail">Commerce</span><span class="v" data-en="Ben Aknoune hotel & shopping center">Hôtel & centre commercial de Ben Aknoune</span></div>
+          <div class="proj"><span class="k" data-en="International">International</span><span class="v" data-en="Hyatt Regency Algiers · Sciences Complex, UdeM Montreal">Hyatt Regency Alger · Complexe des sciences, UdeM Montréal</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="vm">
+      <div class="vm-card reveal"><span class="no">01</span><h3>Vision</h3>
+        <p data-en="Reconciling the art of building with digital intelligence. The digital model should not be a constraint but the engine of a project's success. Our vision: to become the reference partner for the construction industry's digital transformation — for buildings that are more efficient, more sustainable and better controlled.">Réconcilier l'art de bâtir et l'intelligence numérique. La maquette numérique ne doit pas être une contrainte, mais le moteur de la réussite d'un projet. Notre vision : devenir le partenaire de référence de la transformation digitale de la construction — pour des bâtiments plus performants, plus durables et mieux maîtrisés.</p>
+      </div>
+      <div class="vm-card reveal"><span class="no">02</span><h3>Mission</h3>
+        <p data-en="Securing and optimizing your complex projects. We support architects, design offices and contractors in producing flawless execution studies and managing smooth BIM workflows — turning technical complexity into buildable solutions, from design to site.">Sécuriser et optimiser vos projets complexes. Nous accompagnons architectes, bureaux d'études et entreprises dans la production d'études d'exécution irréprochables et la gestion de workflows BIM fluides — en transformant la complexité technique en solutions constructibles, de la conception jusqu'au chantier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow" data-en="Our solutions for your projects">Nos solutions pour vos projets</span>
+      <h2 data-en="Three complementary areas of expertise">Trois pôles d'expertise complémentaires</h2>
+    </div>
+    <div class="sol">
+      <div class="sol-card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4M8 13h8M8 17h6"/></svg></div>
+        <h3 data-en="Design development<br>(APS → EXE)">Développement d'étude<br>(APS → EXE)</h3>
+        <ul>
+          <li data-en="All-phase drawings: APS, APD, DCE, EXE & shop drawings">Plans toutes phases : APS, APD, DCE, EXE & plans d'atelier</li>
+          <li data-en="Technical synthesis & construction details (waterproofing, façades, joinery)">Synthèse technique & détails constructifs (étanchéité, façades, menuiseries)</li>
+          <li data-en="Technical writing: CCTP, specifications, notices">Rédaction technique : CCTP, cahiers des charges, notices</li>
+          <li data-en="Quality control & pre-synthesis before site">Contrôle qualité & pré-synthèse avant chantier</li>
+        </ul>
+      </div>
+      <div class="sol-card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <h3 data-en="BIM Management & Implementation">BIM Management & Implémentation</h3>
+        <ul>
+          <li data-en="BIM conventions, BEP & agency standards">Conventions BIM, BEP & standards d'agence</li>
+          <li data-en="Templates & intelligent parametric families">Gabarits (templates) & familles paramétriques intelligentes</li>
+          <li data-en="Support & training — Revit / Navisworks hotline">Support & formation — hotline Revit / Navisworks</li>
+          <li data-en="Automation via Dynamo, Python & Power Automate">Automatisation via Dynamo, Python & Power Automate</li>
+        </ul>
+      </div>
+      <div class="sol-card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
+        <h3 data-en="BIM Production & Coordination">Production & Coordination BIM</h3>
+        <ul>
+          <li data-en="Architecture, Structure & MEP modeling — LOD 200 to 500">Modélisation Architecture, Structure & MEP — LOD 200 à 500</li>
+          <li data-en="Visualization: realistic renders & immersive atmospheres">Visualisation : rendus réalistes & ambiances immersives</li>
+          <li data-en="Clash detection (Navisworks / BIMCollab)">Clash detection (Navisworks / BIMCollab)</li>
+          <li data-en="Autodesk Construction Cloud CDE — ISO 19650 · QTO & 4D">CDE Autodesk Construction Cloud — ISO 19650 · QTO & 4D</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="env">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow" data-en="Our environment">Notre environnement</span>
+      <h2 data-en="The tools of a mastered workflow">Les outils d'un workflow maîtrisé</h2>
+      <p data-en="A complete software stack, from modeling to data exploitation.">Une stack logicielle complète, de la modélisation à l'exploitation de la donnée.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip">Revit</span><span class="chip">Navisworks</span><span class="chip">BIMCollab</span>
+      <span class="chip">Autodesk Construction Cloud</span><span class="chip">Dynamo</span><span class="chip">Python</span>
+      <span class="chip">Power Automate</span><span class="chip">Robot Structural Analysis</span><span class="chip">Enscape / V-Ray</span>
+    </div>
+    <div class="env-cats reveal">
+      <div class="env-cat"><h4>Production</h4><p data-en="Rigorous Arch / Struct / MEP models, LOD 200–500.">Maquettes Arch / Struct / MEP rigoureuses, LOD 200–500.</p></div>
+      <div class="env-cat"><h4 data-en="Coordination & CDE">Coordination & CDE</h4><p data-en="Common data environment, ISO 19650.">Environnement commun de données, ISO 19650.</p></div>
+      <div class="env-cat"><h4 data-en="Visualization">Visualisation</h4><p data-en="Realistic renders & immersive functional scenarios.">Rendus réalistes & scénarios fonctionnels immersifs.</p></div>
+      <div class="env-cat"><h4 data-en="Performance & automation">Performance & automatisation</h4><p>Dynamo, Python, Power Automate.</p></div>
+      <div class="env-cat"><h4 data-en="Technical analysis">Calcul technique</h4><p data-en="Robot — structure & civil engineering.">Robot — structure & génie civil.</p></div>
+      <div class="env-cat"><h4 data-en="Project management">Gestion de projet</h4><p data-en="Collaboration & deliverable tracking.">Collaboration & suivi des livrables.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="plat" id="platform">
+  <div class="wrap plat-grid">
+    <div class="reveal">
+      <span class="badge" data-en="Our in-house platform">Notre plateforme propriétaire</span>
+      <h2>Bim<span class="o">Plan</span></h2>
+      <p class="lead" style="margin-top:14px" data-en="The bridge between Revit and the web. Built in-house by BIMATIKA: a Revit plugin + web platform to leverage your plans, rooms and data — in real time.">Le pont entre Revit et le web. Développé en interne par BIMATIKA : un plugin Revit + une plateforme web pour exploiter vos plans, vos pièces et vos données — en temps réel.</p>
+      <div class="feats">
+        <div class="feat"><span class="d">1</span><div data-en="<b>Export & visualization</b> — send your floor plans and rooms to an interactive web viewer in one click."><b>Export & visualisation</b> — envoyez vos plans d'étage et pièces vers une visionneuse web interactive en un clic.</div></div>
+        <div class="feat"><span class="d">2</span><div data-en="<b>Two-way sync</b> — edit room parameters online and receive them back in Revit."><b>Synchronisation bidirectionnelle</b> — éditez les paramètres de pièces en ligne, recevez-les dans Revit.</div></div>
+        <div class="feat"><span class="d">3</span><div data-en="<b>Analysis & costs</b> — colored synoptic, quantities, parametric finishes, Excel export."><b>Analyse & coûts</b> — synoptique coloré, quantitatifs, finitions paramétrables, export Excel.</div></div>
+        <div class="feat"><span class="d">4</span><div data-en="<b>Versions & comparison</b> — log and compare how your project data evolves."><b>Versions & comparaison</b> — historisez et comparez l'évolution de vos données projet.</div></div>
+      </div>
+      <a href="https://bimatika-bimplan.pages.dev" target="_blank" rel="noopener" class="btn" data-en="Open the platform →">Ouvrir la plateforme →</a>
+    </div>
+    <div class="reveal">
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i><span>bimatika-bimplan.pages.dev</span></div>
+        <div class="mock-body">
+          <div class="mk-rail"><i></i><i></i><i></i><i></i></div>
+          <div class="mk-plan">
+            <svg viewBox="0 0 300 230" fill="none" stroke="#1f3354" stroke-width="1">
+              <rect x="20" y="20" width="120" height="90" fill="#13325a" fill-opacity=".5"/>
+              <rect x="150" y="20" width="130" height="60" fill="#3a2a13" fill-opacity=".6"/>
+              <rect x="150" y="90" width="60" height="120" fill="#16402a" fill-opacity=".6"/>
+              <rect x="220" y="90" width="60" height="120" fill="#3a1320" fill-opacity=".55"/>
+              <rect x="20" y="120" width="120" height="90" fill="#2a1340" fill-opacity=".55"/>
+            </svg>
+          </div>
+          <div class="mk-side"><i></i><i class="s"></i><i></i><i></i><i class="s"></i><i></i><i></i><i class="s"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow" data-en="Our team">Notre équipe</span>
+      <h2 data-en="Already-coordinated associates">Des associés déjà coordonnés</h2>
+      <p data-en="Over 4 years of close collaboration on large-scale projects — complementary skills covering the entire value chain, with no ramp-up time.">Plus de 4 ans de collaboration étroite sur des projets d'envergure — des compétences complémentaires qui couvrent toute la chaîne de valeur, sans temps d'adaptation.</p>
+    </div>
+    <div class="team">
+      <div class="mem reveal"><div class="photo-wrap"><img class="photo" src="team/manseur.png" alt="Manseur Mohamed" loading="lazy"/></div><h4>Manseur Mohamed</h4><div class="role" data-en="Senior Architect · BIM Expert">Architecte Senior · BIM Expert</div><span class="yrs" data-en="14 yrs">14 ans</span><p data-en="BIM management and coordination from the concept phase. Hyatt Regency Algiers, Hôtel Thalassa, Sciences Complex of UdeM (Montreal).">Gestion et coordination BIM dès la phase concept. Hyatt Regency Alger, Hôtel Thalassa, Complexe des sciences de l'UdeM (Montréal).</p></div>
+      <div class="mem reveal"><div class="photo-wrap"><img class="photo" src="team/chebila.png" alt="Chebila Bilal" loading="lazy"/></div><h4>Chebila Bilal</h4><div class="role" data-en="Senior Technical Architect">Architecte Senior Technique</div><span class="yrs" data-en="13 yrs">13 ans</span><p data-en="Execution studies & shop drawings. Algiers Airport, Trust tourist complex, MHUV headquarters.">Études d'exécution & dessins d'atelier. Aéroport d'Alger, complexe touristique Trust, siège du MHUV.</p></div>
+      <div class="mem reveal"><div class="photo-wrap"><img class="photo" src="team/bensalah.png" alt="Bensalah Bilel" loading="lazy"/></div><h4>Bensalah Bilel</h4><div class="role" data-en="Senior Architect">Architecte Senior</div><span class="yrs" data-en="10 yrs">10 ans</span><p data-en="Technical coordination, quality control & site supervision. High-end housing, hotels, 520-bed hospital.">Coordination technique, contrôle qualité & suivi de chantier. Logements haut standing, hôtels, hôpital 520 lits.</p></div>
+      <div class="mem reveal"><div class="photo-wrap"><img class="photo" src="team/benlacheheb.png" alt="Benlacheheb Youcef" loading="lazy"/></div><h4>Benlacheheb Youcef</h4><div class="role" data-en="Architect · BIM Coordinator">Architecte · BIM Coordinateur</div><span class="yrs" data-en="9 yrs">9 ans</span><p data-en="Modeling, coordination & 3D visualization. Technical consistency and quality of multidisciplinary deliverables.">Modélisation, coordination & visualisation 3D. Cohérence technique et qualité des livrables multidisciplinaires.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow" data-en="Let's work together">Travaillons ensemble</span>
+      <h2>Building better,<br><span class="o">together</span>.</h2>
+      <p data-en="An already-coordinated team, with no ramp-up time, where each expertise precisely answers a need of your project.">Une équipe déjà coordonnée, sans temps d'adaptation, où chaque expertise répond précisément à un besoin de votre projet.</p>
+      <div class="contact-cta">
+        <a href="mailto:contact@bimatika.com" class="btn lite">contact@bimatika.com</a>
+        <a href="https://bimatika-bimplan.pages.dev" target="_blank" rel="noopener" class="btn outline-lite" data-en="See the BimPlan platform">Voir la plateforme BimPlan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <a href="#top" class="wm" style="font-size:18px"><span class="chev">›</span>BIM<span class="out">ATIKA</span></a>
+    <div>© <span id="yr"></span> BIMATIKA — Shaping the built environment</div>
+    <a href="https://bimatika.pages.dev" target="_blank" rel="noopener">bimatika.pages.dev</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  /* ── reveal on scroll ── */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ── language (FR default / EN) ── */
+  const langBtn=document.getElementById('langBtn');
+  function applyLang(l){
+    document.documentElement.lang=l;
+    document.querySelectorAll('[data-en]').forEach(el=>{
+      if(el._fr===undefined) el._fr=el.innerHTML;          // capture French original once
+      el.innerHTML = (l==='en') ? el.getAttribute('data-en') : el._fr;
+    });
+    langBtn.textContent = (l==='en') ? 'FR' : 'EN';
+    try{ localStorage.setItem('bimatika_lang',l); }catch(e){}
+  }
+  langBtn.addEventListener('click',()=>applyLang(document.documentElement.lang==='en'?'fr':'en'));
+
+  /* ── theme (light / dark) ── */
+  const themeBtn=document.getElementById('themeBtn');
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    themeBtn.textContent = (t==='dark') ? '☀' : '☾';
+    try{ localStorage.setItem('bimatika_theme',t); }catch(e){}
+  }
+  themeBtn.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+  /* ── initial state ── */
+  let savedLang='fr', savedTheme=null;
+  try{ savedLang=localStorage.getItem('bimatika_lang')||'fr'; savedTheme=localStorage.getItem('bimatika_theme'); }catch(e){}
+  if(!savedTheme) savedTheme = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  applyTheme(savedTheme);
+  if(savedLang==='en') applyLang('en'); else langBtn.textContent='EN';
+</script>
+</body>
+</html>
