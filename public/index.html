@@ -110,18 +110,14 @@
   .plat .feat{display:flex;gap:12px;align-items:flex-start}
   .plat .feat .d{width:26px;height:26px;flex-shrink:0;border:1.4px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:var(--disp);font-weight:700}
   .plat .feat b{font-family:var(--disp)}
-  .mock{background:#0d1526;border:1px solid #1f2c44;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.22)}
-  .mock-bar{height:34px;background:#111c2e;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid #1f2c44}
+  .mock{background:#0d1526;border:1px solid #1f2c44;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+  .mock-bar{height:34px;background:#111c2e;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid #1f2c44;flex-shrink:0}
   .mock-bar i{width:9px;height:9px;border-radius:50%;background:#33415c;display:inline-block}
   .mock-bar span{margin-left:10px;font-size:11px;color:#7e8aa3;font-family:var(--disp)}
-  .mock-body{display:grid;grid-template-columns:54px 1fr 150px;height:230px}
-  .mk-rail{background:#0b1424;border-right:1px solid #182338}
-  .mk-rail i{display:block;height:30px;margin:8px 7px;border-radius:4px;background:#15203a}
-  .mk-plan{position:relative;background:#060e1f;overflow:hidden}
-  .mk-plan svg{position:absolute;inset:0;width:100%;height:100%}
-  .mk-side{background:#0b1424;border-left:1px solid #182338;padding:10px}
-  .mk-side i{display:block;height:13px;margin-bottom:7px;border-radius:3px;background:#15203a}
-  .mk-side i.s{width:60%}
+  .mock-screens{display:flex;flex-direction:column;gap:3px;background:#060e1f}
+  .mock-screens img{width:100%;display:block;object-fit:cover}
+  .mock-screens img.main{height:220px;object-position:top left}
+  .mock-screens img.sub{height:130px;object-position:top left;opacity:.85;border-top:3px solid #1f2c44}
 
   .team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
   .mem{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:26px 22px;text-align:center}
@@ -341,18 +337,9 @@
     <div class="reveal">
       <div class="mock">
         <div class="mock-bar"><i></i><i></i><i></i><span>BimFlow — Visionneuse de Plans</span></div>
-        <div class="mock-body">
-          <div class="mk-rail"><i></i><i></i><i></i><i></i></div>
-          <div class="mk-plan">
-            <svg viewBox="0 0 300 230" fill="none" stroke="#1f3354" stroke-width="1">
-              <rect x="20" y="20" width="120" height="90" fill="#13325a" fill-opacity=".5"/>
-              <rect x="150" y="20" width="130" height="60" fill="#3a2a13" fill-opacity=".6"/>
-              <rect x="150" y="90" width="60" height="120" fill="#16402a" fill-opacity=".6"/>
-              <rect x="220" y="90" width="60" height="120" fill="#3a1320" fill-opacity=".55"/>
-              <rect x="20" y="120" width="120" height="90" fill="#2a1340" fill-opacity=".55"/>
-            </svg>
-          </div>
-          <div class="mk-side"><i></i><i class="s"></i><i></i><i></i><i class="s"></i><i></i><i></i><i class="s"></i></div>
+        <div class="mock-screens">
+          <img class="main" src="assets/bimflow-viewer.png" alt="BimFlow — plan 2D interactif avec pièces colorées par paramètre" loading="lazy"/>
+          <img class="sub" src="assets/bimflow-analyse.png" alt="BimFlow — page analyse avec graphiques et estimatif" loading="lazy"/>
         </div>
       </div>
     </div>
